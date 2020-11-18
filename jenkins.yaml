@@ -1,0 +1,75 @@
+jenkins:
+  systemMessage: "Jenkins configured using CasC."
+  authorizationStrategy: "loggedInUsersCanDoAnything"
+  numExecutors: 2
+  mode: NORMAL
+  disableRememberMe: false
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  scmCheckoutRetryCount: 3
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+      - id: "admin"
+        password: "admin"
+      - id: "DAC"
+        description: "DAC User"
+        password: "password"
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          description: "github-credentials"
+          id: "gituser"
+          password: "Jn5u9y8UI*M*"
+          scope: GLOBAL
+          username: "TBservice-jenkins"
+unclassified:
+  gitSCM:
+    createAccountBasedOnEmail: true
+    globalConfigEmail: "Jenkins@gft.com"
+    globalConfigName: "Jenkins"
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: true
+tool:
+  dockerTool:
+    installations:
+    - name: "docker"
+      properties:
+      - installSource:
+          installers:
+          - fromDocker:
+              version: "19.03.9"
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+jobs:
+- script: >
+    job('Seed All') {
+      parameters {
+        stringParam('REPO', 'https://github.com/tranquilitybase-io/tb-jenkins-jobs.git', 'The branch where Jenkins is stored')
+        stringParam('BRANCH', 'master', 'The branch (used for testing)')
+      }
+      triggers {
+        cron("H/15 * * * *")
+      }
+      scm {
+        git {
+          remote {
+            url '$REPO'
+          }
+        }
+      }
+      steps {
+        dsl {
+          external('*.groovy')  
+       // default behavior
+       // removeAction('IGNORE')      
+          removeAction('DELETE')
+        }
+      }
+    }

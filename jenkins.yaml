@@ -52,7 +52,7 @@ jobs:
     job('Seed All') {
       parameters {
         stringParam('REPO', 'https://github.com/tranquilitybase-io/tb-jenkins-jobs.git', 'The branch where Jenkins is stored')
-        stringParam('BRANCH', 'master', 'The branch (used for testing)')
+        stringParam('BRANCH', 'main', 'The branch (used for testing)')
       }
       triggers {
         cron("H/15 * * * *")
@@ -61,6 +61,7 @@ jobs:
         git {
           remote {
             url '$REPO'
+            branch '$BRANCH'
           }
         }
       }

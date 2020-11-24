@@ -64,7 +64,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/${TINI_VERSION}
 # Installs Docker Engine  
 RUN sudo apt-get update \
 && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common \
-&& curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - \ 
+&& curl -4fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - \ 
 && sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
 && sudo apt-get update \
 && sudo apt-get install -y docker-ce docker-ce-cli containerd.io  

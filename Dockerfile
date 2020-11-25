@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-stretch
 
 # Install git lfs on Debian stretch per https://github.com/git-lfs/git-lfs/wiki/Installation#debian-and-ubuntu
 # Avoid JENKINS-59569 - git LFS 2.7.1 fails clone with reference repository
-RUN apt-get update && apt-get upgrade -y && apt-get install -y  sudo git curl  build-essential && curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs && git lfs install && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get upgrade -y && apt-get install -y  dos2unix sudo git curl  build-essential && curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs && git lfs install && rm -rf /var/lib/apt/lists/*
 
 RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-stretch main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
     && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
@@ -99,16 +99,9 @@ ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
 USER root
 # ensure shell scripts have unix line endings
-RUN dos2unix -- *.sh
-RUN ["chmod", "+x", "install-plugins.sh"]
-
-
-USER ${user}
-
 
 ENV CASC_JENKINS_CONFIG=/var/jenkins_config/jenkins.yaml
 COPY jenkins.yaml /var/jenkins_config/jenkins.yaml
-
 COPY init-scripts /usr/share/jenkins/ref/init.groovy.d
 COPY disable-script-security.groovy /usr/share/jenkins/ref/init.groovy.d/disable-script-security.groovy
 COPY jenkins-support /usr/local/bin/jenkins-support
@@ -117,8 +110,20 @@ COPY tini-shim.sh /bin/tini
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
-RUN  /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt 
 COPY security.groovy /usr/share/jenkins/ref/init.groovy.d/security.groovy
+
+RUN dos2unix -- /usr/local/bin/*.sh
+RUN dos2unix -- /usr/local/bin/jenkins-support
+
+RUN ["chmod", "+x", "/usr/local/bin/jenkins-support"]
+RUN ["chmod", "+x", "/usr/local/bin/jenkins.sh"]
+RUN ["chmod", "+x", "/usr/local/bin/plugins.sh"]
+RUN ["chmod", "+x", "/usr/local/bin/install-plugins.sh"]
+
+RUN  /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+
+USER ${user}
+
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
 
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup ${REF}/plugins from a support bundle

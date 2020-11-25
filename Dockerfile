@@ -62,12 +62,12 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/${TINI_VERSION}
   && chmod +x /sbin/tini
   
 # Installs Docker Engine  
-RUN sudo apt-get update \
+RUN sudo apt-get -o Acquire::ForceIPv4=true update \
 && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common \
 && curl -4fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - \ 
 && sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
-&& sudo apt-get update \
-&& sudo apt-get install -y docker-ce docker-ce-cli containerd.io  
+&& sudo apt-get -o Acquire::ForceIPv4=true update \
+&& sudo apt-get install -y docker-ce-cli  
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
@@ -96,6 +96,11 @@ EXPOSE ${http_port}
 EXPOSE ${agent_port}
 
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
+
+USER root
+# ensure shell scripts have unix line endings
+RUN dos2unix -- *.sh
+RUN ["chmod", "+x", "install-plugins.sh"]
 
 
 USER ${user}

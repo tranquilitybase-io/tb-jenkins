@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  jenkins:
+    container_name: jenkins
+    image: gcr.io/tranquility-base-images/tb-jenkins:latest
+    hostname: jenkins
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /var/secrets/google/ec-service-account-config.json
+      DAC_JENKINS_USER: testuser
+      DAC_JENKINS_PASSWORD: testpass
+    ports:
+      - 3200:8080
+    volumes:
+      # credentials.json and ec-config.yaml should have been created and exist in the project root directory
+      - .\credentials.json:/var/secrets/google/ec-service-account-config.json:ro
+      - .\ec-config.yaml:/app/ec-config.yaml:ro
+
+
+
+

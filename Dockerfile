@@ -96,16 +96,23 @@ USER ${user}
 ENV CASC_JENKINS_CONFIG=/var/jenkins_config/jenkins.yaml
 COPY jenkins.yaml /var/jenkins_config/jenkins.yaml
 
+USER root
 COPY init-scripts /usr/share/jenkins/ref/init.groovy.d
 COPY disable-script-security.groovy /usr/share/jenkins/ref/init.groovy.d/disable-script-security.groovy
 COPY jenkins-support /usr/local/bin/jenkins-support
+RUN ["chmod", "+x", "/usr/local/bin/jenkins-support"]
 COPY jenkins.sh /usr/local/bin/jenkins.sh
+RUN ["chmod", "+x", "/usr/local/bin/jenkins.sh"]
+
 COPY tini-shim.sh /bin/tini
 COPY plugins.sh /usr/local/bin/plugins.sh
+RUN ["chmod", "+x", "/usr/local/bin/plugins.sh"]
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
-RUN  /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt 
+RUN ["chmod", "+x", "/usr/local/bin/install-plugins.sh"]
+RUN  /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 COPY security.groovy /usr/share/jenkins/ref/init.groovy.d/security.groovy
+USER jenkins
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
 
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup ${REF}/plugins from a support bundle

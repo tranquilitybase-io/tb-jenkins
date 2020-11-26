@@ -98,7 +98,6 @@ EXPOSE ${agent_port}
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
 USER root
-# ensure shell scripts have unix line endings
 
 ENV CASC_JENKINS_CONFIG=/var/jenkins_config/jenkins.yaml
 COPY jenkins.yaml /var/jenkins_config/jenkins.yaml
@@ -112,6 +111,7 @@ COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 COPY install-plugins.sh /usr/local/bin/install-plugins.sh
 COPY security.groovy /usr/share/jenkins/ref/init.groovy.d/security.groovy
 
+# ensure shell scripts have unix line endings
 RUN dos2unix -- /usr/local/bin/*.sh
 RUN dos2unix -- /usr/local/bin/jenkins-support
 
@@ -120,9 +120,9 @@ RUN ["chmod", "+x", "/usr/local/bin/jenkins.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/plugins.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/install-plugins.sh"]
 
-RUN  /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
-
 USER ${user}
+
+RUN  /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
 

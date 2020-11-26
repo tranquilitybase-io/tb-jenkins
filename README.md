@@ -1,6 +1,6 @@
 # Building and pushing the Jenkins Docker image to a GCR repo
 
-Make changes to the jenkins configuration files as required and run the following build procedure such that the new image can be pushed into GCR or any other Repo
+Make changes to the jenkins configuration files as required and run the following build procedure such that the new image can be pushed into GCR or any other Repo .
 
 ```
 gcloud config set project tranquility-base-images

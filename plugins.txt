@@ -154,7 +154,7 @@ blueocean-personalization
 blueocean-core-js
 blueocean-events
 blueocean-i18n
-blueocean
+blueocean:1.24.3
 blueocean-autofavorite
 service-now
 build-timeout

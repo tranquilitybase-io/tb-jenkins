@@ -32,7 +32,7 @@ credentials:
           serviceAccountConfig:
             json:
               filename: "ec-service-account-config.json"
-              secretJsonKey: "${base64:${readFile:${GOOGLE_APPLICATION_CREDENTIALS}}"
+              secretJsonKey: ${base64:${readFile:${GOOGLE_APPLICATION_CREDENTIALS}}}
 unclassified:
   gitSCM:
     createAccountBasedOnEmail: true

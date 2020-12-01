@@ -161,3 +161,4 @@ build-timeout
 build-token-trigger
 build-token-root
 xml-job-to-job-dsl:0.1.13
+ws-cleanup

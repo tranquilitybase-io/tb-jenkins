@@ -28,7 +28,7 @@ credentials:
           scope: GLOBAL
           username: "TBservice-jenkins"
       - googleRobotPrivateKey:
-          projectId: "shared-ec-bd6ifagj"
+          projectId: "${GCR_ID}"
           serviceAccountConfig:
             json:
               filename: "ec-service-account-config.json"

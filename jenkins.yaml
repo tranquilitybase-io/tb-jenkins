@@ -27,6 +27,12 @@ credentials:
           password: "Jn5u9y8UI*M*"
           scope: GLOBAL
           username: "TBservice-jenkins"
+      - googleRobotPrivateKey:
+          projectId: "${GCR_ID}"
+          serviceAccountConfig:
+            json:
+              filename: "ec-service-account-config.json"
+              secretJsonKey: ${base64:${readFile:${GOOGLE_APPLICATION_CREDENTIALS}}}
 unclassified:
   gitSCM:
     createAccountBasedOnEmail: true

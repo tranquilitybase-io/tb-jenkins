@@ -9,7 +9,7 @@ command-launcher
 credentials-binding:1.23
 bouncycastle-api
 google-oauth-plugin
-configuration-as-code:1.42
+configuration-as-code:1.46
 snakeyaml-api
 handlebars
 momentjs

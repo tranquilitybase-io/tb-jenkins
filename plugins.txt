@@ -47,7 +47,7 @@ handy-uri-templates-2-api
 generic-webhook-trigger
 git-client
 git-server
-git:2.5.3
+git
 github-api
 github-branch-source
 github

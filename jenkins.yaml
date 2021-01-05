@@ -6,7 +6,7 @@ jenkins:
       connectTimeout: 15
       containerCap: 6
       containerCapStr: "6"
-      credentialsId: "952871867769"
+      credentialsId: "${GCR_ID}"
       jenkinsTunnel: "10.1.138.51:50000"
       jenkinsUrl: "http://10.1.138.51/jenkins-service"
       name: "kubernetes"

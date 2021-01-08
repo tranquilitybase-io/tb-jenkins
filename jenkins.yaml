@@ -1,12 +1,57 @@
 jenkins:
   systemMessage: "Jenkins configured using CasC."
   authorizationStrategy: "loggedInUsersCanDoAnything"
+  clouds:
+  - kubernetes:
+      connectTimeout: 15
+      containerCap: 6
+      containerCapStr: "6"
+      credentialsId: "${GCR_ID}"
+      jenkinsTunnel: "10.1.135.152:50000"
+      jenkinsUrl: "http://10.1.135.152/jenkins-service"
+      name: "kubernetes"
+      namespace: "cicd"
+      serverUrl: "https://172.16.0.2"
+      templates:
+      - containers:
+        - alwaysPullImage: true
+          envVars:
+          - secretEnvVar:
+              key: "GCR_ID"
+              optional: false
+              secretKey: "folder"
+              secretName: "gcr-folder"
+          image: "gcr.io/tranquility-base-images/tb-jenkins-slave"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "jnlp"
+          ttyEnabled: true
+          workingDir: "/home/jenkins/agent"
+        id: "c2d70d57-7d3f-41f7-b2f6-47d093d6ea46"
+        label: "gke-slave"
+        name: "gke-slave"
+        namespace: "cicd"
+        nodeUsageMode: "NORMAL"
+        runAsUser: "0"
+        volumes:
+        - hostPathVolume:
+            hostPath: "/var/run/docker.sock"
+            mountPath: "/var/run/docker.sock"
+        yamlMergeStrategy: "override"  
   numExecutors: 2
-  mode: NORMAL
+  mode: EXCLUSIVE
   disableRememberMe: false
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
+  labelAtoms:
+  - name: "gke-slave"
+  - name: "master"  
+  markupFormatter: "plainText"
   scmCheckoutRetryCount: 3
   securityRealm:
     local:

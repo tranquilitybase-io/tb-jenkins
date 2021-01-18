@@ -131,7 +131,7 @@ workflow-step-api
 workflow-support
 favorite
 token-macro
-terraform 
+terraform
 sse-gateway
 cloudbees-bitbucket-branch-source 
 blueocean-display-url
@@ -162,3 +162,4 @@ build-token-trigger
 build-token-root
 xml-job-to-job-dsl:0.1.13
 ws-cleanup
+envinject:2.4.0

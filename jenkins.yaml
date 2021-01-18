@@ -21,12 +21,6 @@ credentials:
   system:
     domainCredentials:
     - credentials:
-      - usernamePassword:
-          description: "github-credentials"
-          id: "gituser"
-          password: "Jn5u9y8UI*M*"
-          scope: GLOBAL
-          username: "TBservice-jenkins"
       - googleRobotPrivateKey:
           projectId: "${GCR_ID}"
           serviceAccountConfig:
@@ -66,7 +60,7 @@ jobs:
         stringParam('BRANCH', 'main', 'The branch (used for testing)')
       }
       triggers {
-        cron("H/15 * * * *")
+        cron("0 0 * * 0")
       }
       scm {
         git {

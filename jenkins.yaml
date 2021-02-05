@@ -7,8 +7,8 @@ jenkins:
       containerCap: 6
       containerCapStr: "6"
       credentialsId: "${GCR_ID}"
-      jenkinsTunnel: "10.1.135.152:50000"
-      jenkinsUrl: "http://10.1.135.152/jenkins-service"
+      jenkinsTunnel: "${JENKINS_MASTER_SVC_SERVICE_HOST}:50000"
+      jenkinsUrl: "http://${JENKINS_MASTER_SVC_SERVICE_HOST}/jenkins-service"
       name: "kubernetes"
       namespace: "cicd"
       serverUrl: "https://172.16.0.2"

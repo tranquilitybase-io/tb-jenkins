@@ -6,7 +6,7 @@ aws-java-sdk
 structs
 trilead-api
 command-launcher
-credentials-binding:1.23
+credentials-binding:1.24
 bouncycastle-api
 google-oauth-plugin
 configuration-as-code:1.46

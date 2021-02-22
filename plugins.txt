@@ -9,7 +9,7 @@ command-launcher
 credentials-binding:1.24
 bouncycastle-api
 google-oauth-plugin
-configuration-as-code:1.46
+configuration-as-code:1.47
 snakeyaml-api
 handlebars
 momentjs
@@ -30,8 +30,8 @@ branch-api
 cloudbees-folder
 credentials
 cvs
-docker-plugin:1.2.0
-docker-java-api:3.1.5
+docker-plugin:1.2.2
+docker-java-api:3.1.5.2
 docker-commons
 docker-workflow
 durable-task
@@ -154,7 +154,7 @@ blueocean-personalization
 blueocean-core-js
 blueocean-events
 blueocean-i18n
-blueocean:1.24.3
+blueocean:1.24.4
 blueocean-autofavorite
 service-now
 build-timeout

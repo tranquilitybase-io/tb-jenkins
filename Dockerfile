@@ -71,10 +71,10 @@ RUN sudo apt-get -o Acquire::ForceIPv4=true update \
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
-ENV JENKINS_VERSION ${JENKINS_VERSION:-2.278}
+ENV JENKINS_VERSION ${JENKINS_VERSION:-2.280}
 
 # jenkins.war checksum, download will be validated using it
-ARG JENKINS_SHA=c0a477ece3651819346a76ae86382dc32309510ceb3f2f6713a5a4cf4f046957
+ARG JENKINS_SHA=01a2934387297af601b29657e4befa7c0964334dc772af8b3b47e19e3705d45c
 
 # Can be used to customize where jenkins.war get downloaded from
 ARG JENKINS_URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${JENKINS_VERSION}/jenkins-war-${JENKINS_VERSION}.war
